@@ -7,7 +7,6 @@ from os import system
 import re
 import base64
 import face_recognition
-import time
 
 def index(request):
     return render(request, 'index.html')
@@ -61,7 +60,6 @@ def save_image ( request ):
             request.session['username'] = None
             return HttpResponse("You are signed up successfully. Go to signin page....")
         else:
-            time.sleep(1)
             system ( r'del images\train\{}.jpg'.format(request.session['username']))
             messages.error(request, "We cann't not recognise your face")
             messages.error(request, "Please take a another pic having your face only...")
@@ -84,7 +82,6 @@ def save_image ( request ):
                 messages.error(request, "Face does not match...")
                 return render(request, 'take_image.html')
         else:
-            time.sleep(1)
             system(r'del images\test\{}.jpg'.format(request.session['username']))
             messages.error(request, "We cann't not recognise your face")
             messages.error(request, "Please take a another pic having your face only...")
