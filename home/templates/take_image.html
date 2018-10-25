@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+      {% load static %}
+      <meta  charset="utf-8"/>
+      <title>welcome...</title>
+      <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+  </head>
+
+  <body onload="init();">
+    <h1>Take a snapshot of the current video stream</h1>
+   Click on the Start WebCam button.
+
+    {% if messages %}
+        <ul class="message">
+        {% for message in messages %}
+            <li class="error"><p style="color: red">{{ message }}</p></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p>
+    <button onclick="startWebcam();">Start WebCam</button>
+    <button onclick="snapshot();" id="snap" disabled>Take Snapshot</button>
+    </p>
+
+    <video onclick="snapshot(this);" width=400 height=400 id="video" autoplay></video>
+	<canvas  id="myCanvas" width="500" height="400"></canvas>
+
+    <form method="post" action="save_image" id="form">
+        {% csrf_token %}
+        <input type="text" id="mytext" name="imagedata" hidden="hidden">
+        <center><button id="form_button" hidden>Submit</button></center>
+    </form>
+  </body>
+</html>
